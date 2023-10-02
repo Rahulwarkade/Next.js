@@ -3,3 +3,8 @@ A Hook is a special function that lets you “hook into” React features. For e
 Rules : Only Call Hooks at the Top Level, Only Call Hooks from React Functions
 
 Props and Components
+
+static routing using folder
+dynamic routing using folder
+Link = "next/Link" // routing without refreshing the page
+useRouter = "next/navigation" // routing without refreshing the page programaticaly using router.push("/route") method
