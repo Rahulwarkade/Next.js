@@ -1,11 +1,20 @@
 "use client"
-import React from 'react'
+import React, { useContext } from 'react'
 import {useState} from 'react'
 import {useRouter} from 'next/navigation'
+import { User } from '@/Components/UserContext'
 const signup = () => {
   const router = useRouter();
+  const [users,setUser] = useContext(User)
   const submitHandler = (e)=>{
     e.preventDefault();
+    const name = e.target[0].value;
+    const username = e.target[1].value;
+    const password = e.target[2].value;
+    setUser([...users,{name,username,password}]);
+
+    localStorage.setItem("user",JSON.stringify({name,username,password}));
+
     router.push('/Master/signin');
   }
   return (

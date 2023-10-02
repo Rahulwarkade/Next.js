@@ -1,19 +1,35 @@
-import React from 'react'
+'use client'
+import React, { useContext} from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link';
+import { User } from '@/Components/UserContext';
 const singin = () => {
+  const router = useRouter();
+  const [users,setUser] = useContext(User)
+  const submitHandler = (e)=>{
+    e.preventDefault();
+    const username = e.target[0].value;
+    const password = e.target[1].value;
+    const isUser = users.filter((user)=>user.username === username && user.password===password)[0];
+
+    if(isUser)
+    {
+      const index = users.findIndex((user)=>user==isUser);
+       router.push(`/Master/signin/${index}`);
+    }
+    else{
+      alert("User not found ");
+    }
+  }
   return (
     <>
     <div className="container mt-3">
-      <div className="list-group ">
-        <Link href="/Master/signin/Rahul" className="list-group-item list-group-item-primary mt-3">Rahul warkade</Link>
-
-        <Link href="/Master/signin/Alpha" className="list-group-item list-group-item-success mt-3 ">Alpha warkade</Link>
-        <Link href="/Master/signin/Beta" className="list-group-item list-group-item-dark mt-3 ">Beta warkade</Link>
-        <Link href="/Master/signin/Rahul" className="list-group-item list-group-item-danger mt-3 ">Charli warkade</Link>
-        <Link href="/Master/signin/Delta" className="list-group-item list-group-item-warning mt-3 ">Delta warkade</Link>
-        <Link href="/Master/signin/Rahul" className="list-group-item list-group-item-info mt-3 ">Echo warkade</Link>
-        <Link href="/Master/signin/Rahul" className="list-group-item list-group-item-light mt-3 active">Forxt warkade</Link>
-      </div>
+    <h1>Sign in</h1>
+    <form onSubmit={submitHandler}>
+      <input type="text"  placeholder='username' className='form-control mt-3'/>
+      <input type="password"  placeholder='password' className='form-control mt-3'/>
+      <button  type="submit" className="mt-3 btn btn-primary">sign in</button>
+    </form>
     </div>
     </>
   )

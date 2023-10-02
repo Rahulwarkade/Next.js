@@ -1,7 +1,8 @@
+'use client'
 import React from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
-
+import { useState } from "react";
 const page = () => {
   return (
     <>
