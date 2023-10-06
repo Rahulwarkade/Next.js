@@ -6,11 +6,19 @@ import Show from "@/Components/Show.js";
 import Link from "next/link";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+// redux-toolkit
+// import {actionName,increment,decrement,increment5} from '@/store/counterSlice/counterSlice.js'
+import { asyncincrement,actionName,increment,decrement,increment5 } from "@/store/actions/counterActions.js";
+import { useDispatch, useSelector } from "react-redux";
+
 const page = () => {
   const [Posts, setPosts] = useState([]);
   const [flag, setFlag] = useState(false);
   const [page, setPage] = useState(1);
   const [more, setMore] = useState(true);
+
+  const {value} = useSelector((state)=>state.counterSlice);
+  const dispatch = useDispatch();
   const getPost = async () => {
     try {
       const { data } = await axios.get(
@@ -26,6 +34,16 @@ const page = () => {
     getPost();
     console.log("API called!!!");
   }, [page]);
+
+  const addHandler = ()=>{
+    dispatch(increment(1));
+  }
+  const subHandler = ()=>{
+    dispatch(decrement(1))
+  }
+  const add5Handler = ()=>{
+    dispatch(asyncincrement(5));
+  }
   return (
     <>
       <div className="container">
@@ -35,6 +53,13 @@ const page = () => {
         </button>
         {flag ? <Show /> : ""}
         <hr />
+
+        <h3 className="text-danger fs-3 text-uppercase font-monospace">Store value = {value} </h3>
+        <button onClick={addHandler} className="btn btn-sm btn-success">Add one</button>
+        <button onClick={subHandler} className="btn btn-sm btn-warning ml-2">Sub one</button>
+        <button onClick={add5Handler} className="btn btn-sm btn-dark ml-2">add five</button>
+
+        <hr/>
         <h3>Axios Example </h3>
         <button onClick={getPost} className="btn btn-sm btn-success mt-3">
           Get Posts
